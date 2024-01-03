@@ -31,9 +31,9 @@ def parseBlastXML(filePath):
     f = open(filePath)
     blast_records = NCBIXML.parse(f)
     for blast_record in blast_records:
-        queryAccVer = blast_record.query[:blast_record.query.find(" ")]
+        queryAccVer = blast_record.query[:blast_record.query.find(" ")] if " " in blast_record.query else blast_record.query
         for alignment in blast_record.alignments:
-            subjectAccVer = alignment.hit_def[:alignment.hit_def.find(' ')]
+            subjectAccVer = alignment.hit_def[:alignment.hit_def.find(' ')] if " " in alignment.hit_def else alignment.hit_def
             for hsp in alignment.hsps:
                 percentIdentity = round(hsp.identities/hsp.align_length*100,3)
                 alignLength = hsp.align_length
